@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  About | {{ profile.name }}
+{% endblock %}
+{% block meta_description %}
+  About Pawan Kumar - Computer Engineer specializing in software development, machine learning, and cloud solutions
+{% endblock %}
+{% block active_about %}
+  active
+{% endblock %}
+
+{% block content %}
+  <section class="section about-section">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="animate-fade-in">About Me</h2>
+        <p class="animate-fade-in delay-1">Innovator | Problem Solver | Tech Enthusiast</p>
+      </div>
+      <div class="about-content">
+        <div class="about-image animate-slide-left">
+          <img src="{{ profile.about_image.url }}" alt="{{ profile.name }}" />
+        </div>
+        <div class="about-text animate-slide-right">
+          <h3>Who am I?</h3>
+          <p>{{ profile.short_bio }}</p>
+
+          <div class="skills">
+            <h3>Technical Proficiencies</h3>
+            {% for skill in skills %}
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span>{{ skill.name }}</span>
+                  <span>{{ skill.percentage }}%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" data-width="{{ skill.percentage }}%"></div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section experience-section">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="animate-fade-in">Milestones</h2>
+        <p class="animate-fade-in delay-1">Key achievements in my journey</p>
+      </div>
+      <div class="timeline">
+        {% for milestone in milestones %}
+          <div class="timeline-item animate-slide-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">{{ milestone.date }}</div>
+            <div class="timeline-content">
+              <h3>{{ milestone.title }}</h3>
+              <h4>{{ milestone.subtitle }}</h4>
+              <p>{{ milestone.description }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

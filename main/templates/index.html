@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Home | {{ profile.name }}
+{% endblock %}
+{% block active_home %}
+  active
+{% endblock %}
+
+{% block content %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <style>
+    /* Naya Wrapper jo arrows aur slider dono ko hold karega */
+    .slider-wrapper {
+      position: relative;
+      padding: 0 60px; /* Arrows ke liye side mein space banaya */
+    }
+    
+    .swiper {
+      width: 100%;
+      padding-bottom: 50px !important; /* Sirf neeche dots ke liye jagah rakhi */
+    }
+    
+    .swiper-slide {
+      height: auto;
+    }
+    
+    .swiper-slide .project-card {
+      height: 100%;
+    }
+    
+    .swiper-pagination-bullet-active {
+      background: var(--primary) !important;
+    }
+    
+    /* --- NAVIGATION ARROWS --- */
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: var(--primary) !important;
+      background: rgba(255, 255, 255, 0.05);
+      width: 45px !important;
+      height: 45px !important;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      margin-top: -45px; /* Vertical center fix */
+    }
+    
+    /* ARROWS KO SLIDER KE BAHAR SET KIYA */
+    .swiper-button-prev {
+      left: 0 !important; /* Left khali jagah pe */
+    }
+    
+    .swiper-button-next {
+      right: 0 !important; /* Right khali jagah pe */
+    }
+    
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+      font-size: 1.2rem !important;
+      font-weight: bold;
+    }
+    
+    .swiper-button-next:hover,
+    .swiper-button-prev:hover {
+      background: var(--primary);
+      color: #ffffff !important;
+      transform: scale(1.1);
+    }
+    
+    /* Light Mode adjustments */
+    body.light-mode .swiper-button-next,
+    body.light-mode .swiper-button-prev {
+      background: #f0f4f8;
+      border: 1px solid #d1d5db;
+    }
+    
+    /* Mobile pe arrows hide aur padding remove */
+    @media (max-width: 768px) {
+      .slider-wrapper {
+        padding: 0; /* Mobile me side space hata diya */
+      }
+      .swiper-button-next,
+      .swiper-button-prev {
+        display: none !important;
+      }
+    }
+  </style>
+
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content animate-fade-in">
+        <h1 class="animate-slide-up">Hi, I'm {{ profile.name }}</h1>
+        <p class="animate-slide-up delay-1">{{ profile.profession }}</p>
+        <div class="hero-buttons animate-slide-up delay-2">
+          <a href="/projects/" class="btn btn-primary">View My Work</a>
+          <a href="/contact/" class="btn btn-outline">Contact Me</a>
+        </div>
+      </div>
+      <div class="hero-image animate-fade-in delay-3">
+        <img src="{{ profile.hero_image.url }}" alt="Home Image" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section featured-projects">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="animate-fade-in">Featured Works</h2>
+        <p class="animate-fade-in delay-1">Some of my best work</p>
+      </div>
+
+      <div class="slider-wrapper animate-slide-up delay-1">
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            {% for project in featured_projects %}
+              <div class="swiper-slide">
+                <div class="project-card">
+                  <div class="project-image">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" />
+                  </div>
+                  <div class="project-info">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
+                    <a href="/projects/" class="btn btn-small">View Project</a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="swiper-pagination"></div>
+        </div>
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+
+      <br />
+      <div class="text-center animate-fade-in delay-2">
+        <a href="/projects/" class="btn btn-outline">View All Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section resume-section">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="animate-fade-in">My Resume</h2>
+        <p class="animate-fade-in delay-1">Download my professional resume</p>
+      </div>
+      <div class="resume-content animate-fade-in delay-2">
+        <div class="resume-card">
+          <i class="fas fa-file-pdf resume-icon"></i>
+          <h3>Professional Resume</h3>
+          <p>Download my complete resume with all my skills, experience, and education details.</p>
+          <a href="{{ profile.resume.url }}" class="btn btn-primary" download><i class="fas fa-download"></i> Download Resume</a>
+        </div>
+        <div class="resume-stats animate-fade-in delay-3">
+          <div class="stat-item hover-trigger">
+            <h4 class="counter" data-target="{{ profile.projects_completed }}">0+</h4>
+            <p>Projects Completed</p>
+          </div>
+          <div class="stat-item hover-trigger">
+            <h4 class="counter" data-target="{{ profile.years_experience }}">0+</h4>
+            <p>Years Experience</p>
+          </div>
+          <div class="stat-item hover-trigger">
+            <h4 class="counter" data-target="{{ profile.technologies_used }}">0+</h4>
+            <p>Technologies Used</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var swiper = new Swiper('.mySwiper', {
+        loop: true,
+        autoplay: {
+          delay: 3500,
+          disableOnInteraction: false
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        },
+        // --- NAVIGATION ENABLE KIYA ---
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        },
+        breakpoints: {
+          0: { slidesPerView: 1, spaceBetween: 20 },
+          768: { slidesPerView: 2, spaceBetween: 30 },
+          1024: { slidesPerView: 3, spaceBetween: 30 }
+        }
+      })
+    })
+  </script>
+{% endblock %}

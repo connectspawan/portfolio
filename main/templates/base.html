@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+      content="{% block meta_description %}
+        
+        
+        
+        Portfolio of {{ profile.name|default:'Pawan Kumar' }}
+      {% endblock %}" />
+
+    <title>
+      {% block title %}
+        Portfolio | {{ profile.name|default:'Pawan Kumar' }}
+      {% endblock %}
+    </title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/animations.css' %}" />
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="container">
+        <nav class="navbar">
+          <div class="logo">{{ profile.name|default:'Pawan Kumar' }}</div>
+
+          <div class="nav-links">
+            <a href="/"
+              class="{% block active_home %}
+
+              {% endblock %}">
+              Home
+            </a>
+            <a href="/about/"
+              class="{% block active_about %}
+
+              {% endblock %}">
+              About
+            </a>
+            <a href="/projects/"
+              class="{% block active_projects %}
+
+              {% endblock %}">
+              Projects
+            </a>
+            <a href="/contact/"
+              class="{% block active_contact %}
+
+              {% endblock %}">
+              Contact
+            </a>
+
+            <div class="menu-divider"></div>
+
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
+          </div>
+
+          <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <br />
+
+    {% block content %}
+
+    {% endblock %}
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-about animate-fade-in">
+            <h3>{{ profile.name|default:'Pawan Kumar' }}</h3>
+            <p>{{ profile.footer_description|default:'Transforming ideas into impactful technical solutions' }}</p>
+          </div>
+          <div class="footer-links animate-fade-in delay-1">
+            <h3>Explore</h3>
+            <ul>
+              <li>
+                <a href="/">Home</a>
+              </li>
+              <li>
+                <a href="/about/">About</a>
+              </li>
+              <li>
+                <a href="/projects/">Projects</a>
+              </li>
+              <li>
+                <a href="/contact/">Contact</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer-contact animate-fade-in delay-2">
+            <h3>Connect</h3>
+            <div class="social-links">
+              <a href="{{ profile.github|default:'https://github.com/connectspawan' }}" target="_blank"><i class="fab fa-github"></i></a>
+              <a href="{{ profile.linkedin|default:'https://www.linkedin.com/in/connectspawan' }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+              <a href="{{ profile.facebook|default:'https://www.facebook.com/pawankumar.barnawal.501' }}" target="_blank"><i class="fab fa-facebook"></i></a>
+              <a href="{{ profile.instagram|default:'https://www.instagram.com/melomaniac_pawan/' }}" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="email-link">
+              <a href="mailto:{{ profile.email|default:'connectspawan@gmail.com' }}">{{ profile.email|default:'connectspawan@gmail.com' }}</a>
+            </p>
+          </div>
+        </div>
+        <div class="copyright animate-fade-in delay-3">
+          <p>&copy; 2025 {{ profile.name|default:'Pawan Kumar' }}. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/animations.js' %}"></script>
+  </body>
+</html>

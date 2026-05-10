@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Projects | Pawan Kumar
+{% endblock %}
+{% block meta_description %}
+  Explore Pawan Kumar's innovative projects in AI, IoT, and software development
+{% endblock %}
+{% block active_projects %}
+  active
+{% endblock %}
+
+{% block content %}
+  <section class="section projects-section">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="animate-fade-in">My Projects</h2>
+        <p class="animate-fade-in delay-1">Solutions that bridge technology and real-world impact</p>
+      </div>
+
+      <div class="filter-container animate-fade-in delay-2">
+        <button class="filter-btn active" data-filter="all">ALL</button>
+        <button class="filter-btn" data-filter="Website">WEBSITE</button>
+        <button class="filter-btn" data-filter="App">APP</button>
+        <button class="filter-btn" data-filter="AI/ML Project">AI/ML PROJECT</button>
+      </div>
+
+      <div class="projects-grid">
+        {% for project in projects %}
+          <div class="project-card animate-slide-up" data-category="{{ project.project_type }}">
+            <div class="project-image">
+              <img src="{{ project.image.url }}" alt="{{ project.title }}" />
+            </div>
+            <div class="project-info">
+              <h3>{{ project.title }}</h3>
+
+              <span style="font-size: 12px; color: var(--primary); font-weight: bold; margin-bottom: 10px; display: block;">{{ project.project_type }}</span>
+
+              <p>{{ project.description }}</p>
+
+              <div class="project-tags">
+                {% for tech in project.technologies.split %}
+                  <span class="project-tag">{{ tech }}</span>
+                {% endfor %}
+              </div>
+
+              <div class="project-links">
+                {% if project.live_demo %}
+                  <a href="{{ project.live_demo }}" class="btn btn-small" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                {% endif %}
+                {% if project.source_code %}
+                  <a href="{{ project.source_code }}" class="btn btn-small btn-outline" target="_blank"><i class="fab fa-github"></i> Source Code</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <h3>No Projects Added Yet</h3>
+        {% endfor %}
+      </div>
+
+      <div class="cta-section animate-fade-in delay-3">
+        <br />
+        <p>Interested in collaboration or seeing more projects?</p>
+        <a href="/contact/" class="btn btn-primary">Let's Build Something</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const filterBtns = document.querySelectorAll('.filter-btn')
+      const projectCards = document.querySelectorAll('.project-card')
+    
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          // 1. Remove active class from all buttons
+          filterBtns.forEach((b) => b.classList.remove('active'))
+          // 2. Add active class to clicked button
+          btn.classList.add('active')
+    
+          const filterValue = btn.getAttribute('data-filter')
+    
+          // 3. Show/Hide projects based on category
+          projectCards.forEach((card) => {
+            if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+              card.style.display = 'block'
+              setTimeout(() => {
+                card.style.opacity = '1'
+                card.style.transform = 'scale(1)'
+              }, 50)
+            } else {
+              card.style.opacity = '0'
+              card.style.transform = 'scale(0.95)'
+              setTimeout(() => {
+                card.style.display = 'none'
+              }, 300)
+            }
+          })
+        })
+      })
+    })
+  </script>
+{% endblock %}
