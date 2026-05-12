@@ -58,21 +58,21 @@ def contact(request):
             subject=subject,
             message=message
         )
-        send_mail(
-            subject=f'Portfolio Contact: {subject}',
+#         send_mail(
+#             subject=f'Portfolio Contact: {subject}',
 
-            message=f'''
-New Portfolio Contact Form Submission
+#             message=f'''
+# New Portfolio Contact Form Submission
 
-Name: {name}
-Email: {email}
-Message:
-{message}
-''',
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=['connectspawan@gmail.com'],
-            fail_silently=False,
-        )
+# Name: {name}
+# Email: {email}
+# Message:
+# {message}
+# ''',
+#             from_email=settings.EMAIL_HOST_USER,
+#             recipient_list=['connectspawan@gmail.com'],
+#             fail_silently=False,
+#         )
         messages.success(request, 'Your message has been sent successfully to Pawan!')
 
         return redirect('/contact/')
