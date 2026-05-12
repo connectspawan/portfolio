@@ -752,7 +752,7 @@ body.dark-mode .theme-toggle {
 
 .resume-icon {
   font-size: 50px;
-  color: var(--primary-color);
+  color: var(--primary);
   margin-bottom: 20px;
 }
 

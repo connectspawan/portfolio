@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-change-this-key'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -166,4 +166,4 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'connectspawan@gmail.com'
 
-EMAIL_HOST_PASSWORD = 'blzw sbfz elfh dtqa'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
