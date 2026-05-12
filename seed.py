@@ -5,11 +5,11 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio.settings')
 django.setup()
 
-from main.models import Project, Profile  # Profile model bhi import kar liya
+# Milestone model ko bhi yahan import kar liya hai
+from main.models import Project, Profile, Milestone 
 
 def seed_profile():
     print("Seeding profile data...")
-    # Data aapke SQLite database file se extract kiya gaya hai
     profile_data = {
         "name": "Pawan Kumar",
         "profession": "Computer Engineer | Full Stack Developer | AI Enthusiast",
@@ -24,20 +24,68 @@ def seed_profile():
         "short_bio": "Building bridges between complex problems and elegant technical solutions.\n\nI'm a Computer Engineering graduate with a passion for transforming ideas into impactful digital solutions.\n\nMy expertise spans full-stack development, machine learning implementations, and cloud-native architectures.\n\nWhat drives me is the intersection of technology and real-world problem solving.",
         "footer_description": "Building bridges between complex problems and elegant technical solutions.",
         "projects_completed": 13,
-        "years_experience": 2, # Isey apne hisaab se baad mein admin se change kar lena
-        "technologies_used": 15, # Isey bhi admin se adjust kar lena
+        "years_experience": 2, 
+        "technologies_used": 15, 
     }
 
-    # Agar database mein koi profile nahi hai, toh yeh naya bana dega
     if not Profile.objects.exists():
         Profile.objects.create(**profile_data)
         print("Successfully created your Profile!")
     else:
-        # Agar profile pehle se hai, toh usko update kar dega
         Profile.objects.filter(id=1).update(**profile_data)
         print("Profile data already exists. Updated with latest seed data.")
 
+def seed_milestones():
+    print("\nSeeding milestones data...")
+    milestones_data = [
+        {
+            "order": 1,
+            "date": "March 2025",
+            "title": "Code Unnati Finalist",
+            "subtitle": "Top 3% among 830 Teams",
+            "description": "Presented project at GTU before mentors and judges, gaining valuable experience in innovation and pitching."
+        },
+        {
+            "order": 2,
+            "date": "March 2025",
+            "title": "EntrepreNaari 3.0",
+            "subtitle": "Startup Pitch Competition",
+            "description": "Presented startup idea to investors and judges, gaining exposure to entrepreneurship and business pitching."
+        },
+        {
+            "order": 3,
+            "date": "April 2025",
+            "title": "SSIP Grant Recipient",
+            "subtitle": "2 Lakh Innovation Funding",
+            "description": "Selected among Gujarat's most promising startups to receive SSIP's prestigious grant."
+        },
+        {
+            "order": 4,
+            "date": "September 2025",
+            "title": "Best Model Award",
+            "subtitle": "Hand Gesture Controlled Rocket Game",
+            "description": "Won 1st Prize at University Engineer's Day 2025 for \"Gesture-Controlled Rocket Game\"."
+        },
+        {
+            "order": 5,
+            "date": "April 2026",
+            "title": "Completed Internship",
+            "subtitle": "Intern at Shreeji Fintech Pvt Ltd",
+            "description": "Worked at Intern and developed several websites and apps using Django and Flutter framework respectively."
+        }
+    ]
+
+    for data in milestones_data:
+        if not Milestone.objects.filter(title=data['title']).exists():
+            Milestone.objects.create(**data)
+            print(f"Successfully added Milestone: {data['title']}")
+        else:
+            print(f"Milestone already exists: {data['title']}")
+            
+    print("Milestone seeding complete!")
+
 def seed_projects():
+    print("\nSeeding projects data...")
     projects_data = [
         {
             "order": 1,
@@ -158,7 +206,6 @@ def seed_projects():
         }
     ]
 
-    print("Seeding new projects...")
     for data in projects_data:
         if not Project.objects.filter(title=data['title']).exists():
             Project.objects.create(
@@ -178,6 +225,7 @@ def seed_projects():
     print("Project seeding complete!")
 
 if __name__ == '__main__':
-    # Pehle profile seed karega, fir projects!
+    # Teeno cheezein ek saath chalengi: Profile -> Milestones -> Projects
     seed_profile()
+    seed_milestones()
     seed_projects()
